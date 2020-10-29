@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AssemblyBrowserGUI"
+        xmlns:DO="clr-namespace:AssemblyBrowserLib;assembly=AssemblyBrowser"
         mc:Ignorable="d"
         MinHeight="400"
         MinWidth="300"
@@ -20,9 +21,20 @@
             </Grid>
             <Border BorderThickness="1" BorderBrush="LightGray"/>
 
-            <ListView Margin="10">
-                
-            </ListView>
+            <TreeView Margin="10" >
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType ="{x:Type DO:NamespaceDO}" ItemsSource="{Binding Types}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Namespace: " FontStyle="Italic"/>
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="[" Foreground="Blue"/>
+                            <TextBlock Text="{Binding Types.Count}" Foreground="Blue"/>
+                            <TextBlock Text="]" Foreground="Blue"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+                <TreeViewItem ItemsSource="{Binding Assembly.Namespaces}" Header="{Binding Assembly.Name}" />
+            </TreeView>
         </StackPanel>
     </Grid>
 </Window>

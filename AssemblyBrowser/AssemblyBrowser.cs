@@ -10,7 +10,7 @@ namespace AssemblyBrowserLib
 
         public AssemblyDO BrowseAssembly(Assembly assembly)
         {
-            AssemblyDO res = new AssemblyDO(assembly.FullName);
+            AssemblyDO res = new AssemblyDO(assembly.GetName().Name);
             var definedTypes = assembly.GetTypes().ToList();
 
             foreach(Type t in definedTypes)

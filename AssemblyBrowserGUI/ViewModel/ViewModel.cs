@@ -6,8 +6,16 @@ namespace AssemblyBrowserGUI.ViewModel
 {
     class ViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
-        public AssemblyDO assembly;
+        private AssemblyDO assembly;
+        public AssemblyDO Assembly
+        {
+            get { return assembly; }
+            private set
+            {
+                assembly = value;
+                OnPropertyChanged(nameof(Assembly));
+            }
+        }
 
         private IDialogService dialogService;
         private Model.Model model;
@@ -17,7 +25,7 @@ namespace AssemblyBrowserGUI.ViewModel
         private void Load()
         {
             if (dialogService.OpenFileDialog())
-                assembly = model.LoadAssembly(dialogService.FilePath);
+                Assembly = model.LoadAssembly(dialogService.FilePath);
         }
 
         public ICommand LoadCommand { get; set; }
@@ -27,6 +35,12 @@ namespace AssemblyBrowserGUI.ViewModel
             model = new Model.Model();
             dialogService = new DefaultDialogService();
             LoadCommand = new RelayCommand<object>(_ => Load());
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string propName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }
