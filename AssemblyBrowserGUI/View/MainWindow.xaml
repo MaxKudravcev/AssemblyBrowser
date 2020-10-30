@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AssemblyBrowserGUI"
         xmlns:DO="clr-namespace:AssemblyBrowserLib;assembly=AssemblyBrowser"
+        xmlns:reflection="clr-namespace:System.Reflection;assembly=mscorlib"
         mc:Ignorable="d"
         MinHeight="400"
         MinWidth="300"
@@ -32,6 +33,22 @@
                             <TextBlock Text="]" Foreground="Blue"/>
                         </StackPanel>
                     </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type DO:TypeDO}">
+                        <TreeViewItem Header="{Binding Type.Name}">
+                            <TreeViewItem ItemsSource="{Binding Methods}" Header="Methods"/>
+                            <TreeViewItem ItemsSource="{Binding Properties}" Header="Properties"/>
+                            <TreeViewItem ItemsSource="{Binding Fields}" Header="Fields"/>
+                        </TreeViewItem>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type reflection:PropertyInfo}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type reflection:FieldInfo}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type reflection:MethodInfo}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
                 </TreeView.Resources>
                 <TreeViewItem ItemsSource="{Binding Assembly.Namespaces}" Header="{Binding Assembly.Name}" />
             </TreeView>

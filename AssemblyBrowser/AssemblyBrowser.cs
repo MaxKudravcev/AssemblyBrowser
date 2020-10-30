@@ -23,16 +23,17 @@ namespace AssemblyBrowserLib
                     if (!res.Namespaces.Any(ns => ns.Name == t.Namespace))
                         res.Namespaces.Add(new NamespaceDO(t.Namespace));
 
+                    BindingFlags flags = BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
                     TypeDO typeDO = new TypeDO(t);
-                    typeDO.Properties.AddRange(t.GetProperties());
-                    typeDO.Fields.AddRange(t.GetFields());
+                    typeDO.Properties.AddRange(t.GetProperties(flags).Where(pi => !IsCompilerGenerated(pi)));
+                    typeDO.Fields.AddRange(t.GetFields(flags).Where(fi => !IsCompilerGenerated(fi)));
 
                     if (t.IsAbstract && t.IsSealed)                 //Check for extension methods
-                        foreach (MethodInfo mi in t.GetMethods())           
+                        foreach (MethodInfo mi in t.GetMethods(flags).Where(mi => !IsCompilerGenerated(mi)))   
                             if (mi.IsDefined(typeof(ExtensionAttribute)))
                                 extensionMethods.Add(mi);
                             else typeDO.Methods.Add(mi);
-                    else typeDO.Methods.AddRange(t.GetMethods());
+                    else typeDO.Methods.AddRange(t.GetMethods(flags).Where(mi => !IsCompilerGenerated(mi)));
 
                     res.Namespaces.Find(ns => ns.Name == t.Namespace).Types.Add(typeDO);
                 }
@@ -63,7 +64,7 @@ namespace AssemblyBrowserLib
             return res;
         }
 
-        private bool IsCompilerGenerated(Type type)
+        private bool IsCompilerGenerated(MemberInfo type)
         {
             return type.GetCustomAttribute<System.Runtime.CompilerServices.CompilerGeneratedAttribute>() != null;
         }

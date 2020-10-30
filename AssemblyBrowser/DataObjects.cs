@@ -8,11 +8,11 @@ namespace AssemblyBrowserLib
     {
         public Type Type { get; private set; }
 
-        public List<MethodInfo> Methods { get; private set; }
+        public List<MethodInfo> Methods { get; private set; } = new List<MethodInfo>();
 
-        public List<PropertyInfo> Properties { get; private set; }
+        public List<PropertyInfo> Properties { get; private set; } = new List<PropertyInfo>();
 
-        public List<FieldInfo> Fields { get; private set; }
+        public List<FieldInfo> Fields { get; private set; } = new List<FieldInfo>();
 
         public TypeDO(Type type)
         {
