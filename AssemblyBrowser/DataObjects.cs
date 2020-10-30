@@ -1,13 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace AssemblyBrowserLib
 {
+    public class TypeDO
+    {
+        public Type Type { get; private set; }
+
+        public List<MethodInfo> Methods { get; private set; }
+
+        public List<PropertyInfo> Properties { get; private set; }
+
+        public List<FieldInfo> Fields { get; private set; }
+
+        public TypeDO(Type type)
+        {
+            Type = type;
+        }
+    }
+
     public class NamespaceDO
     {
         public string Name { get; private set; }
 
-        public List<Type> Types { get; private set; } = new List<Type>();
+        public List<TypeDO> Types { get; private set; } = new List<TypeDO>();
 
 
         public NamespaceDO(string name)

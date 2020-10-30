@@ -6,7 +6,7 @@ namespace AssemblyBrowserGUI.ViewModel
 {
     class ViewModel : INotifyPropertyChanged
     {
-        private AssemblyDO assembly;
+        private AssemblyDO assembly = null;
         public AssemblyDO Assembly
         {
             get { return assembly; }

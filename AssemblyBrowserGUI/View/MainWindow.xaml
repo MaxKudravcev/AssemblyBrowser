@@ -21,7 +21,7 @@
             </Grid>
             <Border BorderThickness="1" BorderBrush="LightGray"/>
 
-            <TreeView Margin="10" >
+            <TreeView Margin="10" BorderThickness="0">
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType ="{x:Type DO:NamespaceDO}" ItemsSource="{Binding Types}">
                         <StackPanel Orientation="Horizontal">
