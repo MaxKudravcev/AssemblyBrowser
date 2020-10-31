@@ -64,6 +64,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\Model.cs" />
+    <Compile Include="ViewModel\Converters\FieldConverter.cs" />
+    <Compile Include="ViewModel\Converters\GenericTypeNameConverter.cs" />
+    <Compile Include="ViewModel\Converters\MethodConverter.cs" />
+    <Compile Include="ViewModel\Converters\PropertyConverter.cs" />
+    <Compile Include="ViewModel\Converters\TypeConverter.cs" />
     <Compile Include="ViewModel\DialogService\DefaultDialogService.cs" />
     <Compile Include="ViewModel\DialogService\IDialogService.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
@@ -105,5 +110,6 @@
       <Name>AssemblyBrowser</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,12 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AssemblyBrowserGUI"
+        xmlns:converters="clr-namespace:AssemblyBrowserGUI.ViewModel.Converters"
         xmlns:DO="clr-namespace:AssemblyBrowserLib;assembly=AssemblyBrowser"
         xmlns:reflection="clr-namespace:System.Reflection;assembly=mscorlib"
         mc:Ignorable="d"
         MinHeight="400"
         MinWidth="300"
         Title="Assembly Browser" Height="800" Width="400">
+
+    <Window.Resources>
+        <converters:FieldConverter x:Key="FieldConverter"/>
+        <converters:PropertyConverter x:Key="PropertyConverter"/>
+        <converters:MethodConverter x:Key="MethodConverter"/>
+        <converters:TypeConverter x:Key="TypeConverter"/>
+    </Window.Resources>
+    
+    
     <Grid>
         <StackPanel>
             <Grid>
@@ -34,20 +44,20 @@
                         </StackPanel>
                     </HierarchicalDataTemplate>
                     <DataTemplate DataType="{x:Type DO:TypeDO}">
-                        <TreeViewItem Header="{Binding Type.Name}">
+                        <TreeViewItem Header="{Binding Type, Converter={StaticResource TypeConverter}}">
                             <TreeViewItem ItemsSource="{Binding Methods}" Header="Methods"/>
                             <TreeViewItem ItemsSource="{Binding Properties}" Header="Properties"/>
                             <TreeViewItem ItemsSource="{Binding Fields}" Header="Fields"/>
                         </TreeViewItem>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type reflection:PropertyInfo}">
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Converter={StaticResource PropertyConverter}}"/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type reflection:FieldInfo}">
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Converter={StaticResource FieldConverter}}"/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type reflection:MethodInfo}">
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Converter={StaticResource MethodConverter}}"/>
                     </DataTemplate>
                 </TreeView.Resources>
                 <TreeViewItem ItemsSource="{Binding Assembly.Namespaces}" Header="{Binding Assembly.Name}" />
